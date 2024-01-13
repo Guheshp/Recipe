@@ -1,0 +1,13 @@
+.container1 {
+    /* max-width: 490px; */
+    width: 100%;
+    margin: 5rem auto 0 auto;
+    /* border-radius: 10px; */
+    /* border: 2px solid #7b8ab8; */
+
+}
+
+.form-layout{
+    border-radius: 15px;
+    width: 500px;
+}

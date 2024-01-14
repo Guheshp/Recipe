@@ -9,6 +9,8 @@ urlpatterns = [
     path('logout', views.Logout, name='my-logout'),
     path('dashboard', views.Dashboard, name='my-dashboard'),
     path('createrecord', views.CreateRecord, name='my-createrecord'),
+    path('viewrecord/<int:pk>', views.Viewrecord, name='my-viewrecord'),
+    path('updaterecord/<int:pk>', views.UpdateRecord, name='my-updaterecord'),
+    path('deleteRecord/<int:pk>', views.DeleteRecord, name='my-deleteRecord'),
     
-
 ]

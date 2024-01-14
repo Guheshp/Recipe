@@ -38,7 +38,7 @@ class CreateRecordForm(forms.ModelForm):
 
 # update a record form
 
-class updateRecordForm(forms.ModelForm):
+class UpdateRecordForm(forms.ModelForm):
 
     class Meta:
 

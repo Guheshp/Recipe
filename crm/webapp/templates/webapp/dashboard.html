@@ -5,12 +5,13 @@
     
     <div class="container">
     
-    <h5>wellcome to the dashboard page, {{user.username}}</h5>
+    <h5>wellcome, {{user.username}} 👋
+    </h5>
 
     <hr>
 
     <a class="btn btn-outline-primary btn-sm " href="{% url 'my-createrecord'%}">
-        Create a new record
+        Create a new record &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i>
     </a>
 
     <hr>
@@ -51,6 +52,7 @@
                 <td>{{record.state}}</td>
                 <td>{{record.country}}</td>
                 <td>{{record.creation_date}}</td>
+                <td><a href="{% url 'my-viewrecord' record.id %}"> &nbsp;<i class="fa fa-eye" aria-hidden="true"></i></a></td>
 
             </tr>
                 {% endfor %}

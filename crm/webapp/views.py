@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from . forms import (CreateUserForm,
                     LoginForm,
                     CreateRecordForm,
-                    updateRecordForm,
+                    UpdateRecordForm,
                     )
 
 from django.contrib.auth.models import auth
@@ -12,6 +12,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 
 from . models import Record
+
+from django.contrib import messages
 
 # Create your views here.
 
@@ -33,6 +35,8 @@ def Register(request):
         if form.is_valid():
              
             form.save()
+
+            messages.success(request, "Account created successfully")
 
             return redirect('my-login')
         
@@ -73,6 +77,8 @@ def Logout(request):
 
     auth.logout(request)
 
+    messages.success(request, "Logout success!")
+
     return redirect('my-login')
 
 # dashboard.
@@ -101,8 +107,56 @@ def CreateRecord(request):
 
             form.save()
 
+            messages.success(request, "Your record was Created!")
+
             return redirect("my-dashboard")
         
     context = {'form':form}
 
     return render(request, 'webapp/create-record.html', context=context)
+
+# view record 
+@login_required(login_url='my-login')
+def Viewrecord(request, pk):
+    
+    record_all = Record.objects.get(id=pk)
+
+    context = {'record_all': record_all}
+
+    return render(request, 'webapp/view-record.html', context=context)
+
+# update a record 
+
+@login_required(login_url='my-signin')
+def UpdateRecord(request, pk):
+
+    record = Record.objects.get(id=pk)
+
+    form = UpdateRecordForm(instance=record)
+
+    if request.method == 'POST':
+
+        form = UpdateRecordForm(request.POST, instance=record)
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(request, "Your record was Updated!")
+
+            return redirect("my-dashboard")
+        
+    context = {'form': form }
+
+    return render(request, 'webapp/update-record.html', context=context)
+
+@login_required(login_url='my-signin')
+def DeleteRecord(request, pk):
+
+    record = Record.objects.get(id=pk)
+
+    record.delete()
+
+    messages.success(request, "Deleted Successfylly!")
+
+    return redirect('my-dashboard')

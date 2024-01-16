@@ -132,3 +132,15 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#EMAIL settings - lskz qmnv vpnx hkey
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_FROM = 'guheshpanjagall481@gmail.com'
+EMAIL_HOST_USER = 'guheshpanjagall481@gmail.com'
+EMAIL_HOST_PASSWORD = 'lskzqmnvvpnxhkey'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+PASSWORD_RESET_TIMEOUT = 14400

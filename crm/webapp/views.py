@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 
 from . forms import (CreateUserForm,
                     LoginForm,
@@ -14,6 +15,10 @@ from django.contrib.auth.decorators import login_required
 from . models import Record
 
 from django.contrib import messages
+
+
+
+
 
 # Create your views here.
 
@@ -41,8 +46,8 @@ def Register(request):
             return redirect('my-login')
         
     context = {'form':form}
-        
-    return render(request, 'webapp/register.html', context=context)
+  
+    return render(request, 'webapp/register.html',context=context)
        
 # user login.
 def Login(request):
@@ -52,7 +57,6 @@ def Login(request):
     if request.method == "POST":
 
         form = LoginForm(request, data = request.POST) 
-
 
         if form.is_valid():
             
@@ -160,3 +164,5 @@ def DeleteRecord(request, pk):
     messages.success(request, "Deleted Successfylly!")
 
     return redirect('my-dashboard')
+
+

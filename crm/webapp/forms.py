@@ -34,7 +34,7 @@ class CreateRecordForm(forms.ModelForm):
 
         model = Record
 
-        fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'state', 'country']
+        fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'city', 'state', 'country']
 
 # update a record form
 

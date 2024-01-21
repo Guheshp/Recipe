@@ -38,9 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #our apps
     'webapp',
     'crispy_forms',
+    
+   
 ]
+
+
 
 CRISPY_TEMPLATE_PACK ='bootstrap4'
 
@@ -81,7 +86,7 @@ WSGI_APPLICATION = 'crm.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'crm_authentication',
+        'NAME': 'crm',
         'HOST': 'localhost',
         'USER': 'root',
         'PASSWORD': 'admin123',
@@ -137,7 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #EMAIL settings - lskz qmnv vpnx hkey
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_FROM = 'guheshpanjagall481@gmail.com'
+# EMAIL_FROM = 'guheshpanjagall481@gmail.com'
 EMAIL_HOST_USER = 'guheshpanjagall481@gmail.com'
 EMAIL_HOST_PASSWORD = 'lskzqmnvvpnxhkey'
 EMAIL_PORT = 587

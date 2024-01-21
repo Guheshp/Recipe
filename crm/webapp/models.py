@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Record(models.Model):
 
     creation_date = models.DateTimeField(auto_now_add = True)
@@ -10,7 +11,7 @@ class Record(models.Model):
 
     email = models.CharField(max_length = 200)
 
-    phone = models.IntegerField(max_length=10)
+    phone = models.CharField(max_length=12)
 
     address = models.CharField(max_length=300)
 

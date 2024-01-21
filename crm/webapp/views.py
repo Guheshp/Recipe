@@ -16,9 +16,18 @@ from . models import Record
 
 from django.contrib import messages
 
+from django.contrib.sites.shortcuts import get_current_site  
+from django.utils.encoding import force_bytes
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode  
+from django.template.loader import render_to_string  
+from .tokens import account_activation_token  
+from django.contrib.auth.models import User  
+from django.core.mail import EmailMessage  
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 
-
-
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 
@@ -38,16 +47,49 @@ def Register(request):
         form = CreateUserForm(request.POST)
 
         if form.is_valid():
-             
-            form.save()
 
-            messages.success(request, "Account created successfully")
+        # If the form is valid, create a new user instance but don't save it to the database immediately
+            user = form.save(commit=False)
+
+        # Set the 'is_active' attribute of the user to False
+            user.is_active = False
+
+        # Save the user instance with the 'is_active' set to False
+            user.save()
+        
+        # Get the current site's domain
+            current_site = get_current_site(request)  
+
+        # Prepare the email subject and message for account activation
+            mail_subject = 'Activation link has been sent to your email id'   
+            message = render_to_string('webapp/acc_active_email.html', {  
+                'user': user,  
+                'domain': current_site.domain,  
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),  
+                'token':account_activation_token.make_token(user),  
+            })  
+        # Get the email address from the form
+            to_email = form.cleaned_data.get('email')  
+        # Create an EmailMessage instance
+            email = EmailMessage(  
+                        mail_subject, message, to=[to_email]  
+            )
+         # Send the activation email
+            email.send()
+
+            messages.success(request, "Please confirm your email address to complete the registration ")
 
             return redirect('my-login')
         
-    context = {'form':form}
+        else:
+
+            form = CreateUserForm()
+
+            context = {'form':form}
+
+            return render(request, 'webapp/register.html',context=context)
   
-    return render(request, 'webapp/register.html',context=context)
+    return render(request, 'webapp/register.html')
        
 # user login.
 def Login(request):
@@ -165,4 +207,31 @@ def DeleteRecord(request, pk):
 
     return redirect('my-dashboard')
 
+
+def activate(request, uidb64, token):  
+    User = get_user_model()  
+    try:  
+        uid = force_str(urlsafe_base64_decode(uidb64))  
+        user = User.objects.get(pk=uid)  
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):  
+        user = None  
+    if user is not None and account_activation_token.check_token(user, token):  
+        user.is_active = True  
+        user.save()  
+        return redirect('my-acc_active_email_complete')
+    else:  
+       return redirect('my-acc_active_email_invalid') 
+    
+
+def acc_active_email_complete(request):
+    return render(request, 'webapp/acc_active_email_complete.html')
+    
+
+def acc_active_email_invalid(request):
+    return render(request, 'webapp/acc_active_email_invalid.html')
+
+
+
+          
+    
 

@@ -14,6 +14,14 @@ urlpatterns = [
     path('updaterecord/<int:pk>', views.UpdateRecord, name='my-updaterecord'),
     path('deleteRecord/<int:pk>', views.DeleteRecord, name='my-deleteRecord'),
 
+    path('activate/<str:uidb64>/<str:token>/', views.activate, name='activate'),
+#   path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/', views.activate, name='activate'),
+
+     path('acc_active_email_complete',views.acc_active_email_complete, name='my-acc_active_email_complete'),
+
+     path('acc_active_email_invalid',views.acc_active_email_invalid, name='my-acc_active_email_invalid'),
+        
+
     path('reset_password', auth_views.PasswordResetView.as_view(template_name="webapp/reset_password.html" ), 
          name = 'reset_password'),
 

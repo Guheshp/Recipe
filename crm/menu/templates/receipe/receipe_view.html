@@ -1,0 +1,51 @@
+{% extends 'webapp/base.html'%}
+
+{% block content %}
+
+
+
+<div class="card container" >
+
+        <strong style="margin-top: 10px;"> &nbsp;&nbsp; &nbsp; </i> 
+            &nbsp;
+            <h1>{{receip.receipe_name}}</h1>
+        </strong>
+        
+        <hr>
+    
+    <div class="card-body">
+       
+             
+        <div class="side" >
+            
+            <p> <img class="row-img" src="{{receip.imageURL}}" alt=""> </p> 
+            <div  class="row-description">
+            <h6> <strong>Description:</strong>    {{ receip.receipe_description}}</h6>
+            
+            </div>
+        </div>
+           
+            
+    </div>
+
+</div>
+
+        <br>
+
+    <div class="container">
+
+        <!-- <a href="{% url 'my-dashboard'%}" class="btn btn-primary "> Return  &nbsp; <i class="fa fa-arrow-left" aria-hidden="true"></i></a> -->
+
+        &nbsp;
+
+        <!-- <a href="{% url ''  %}" class="btn btn-info">Update &nbsp; <i class="fa fa-plus" aria-hidden="true"></i></a> -->
+      
+        &nbsp;
+
+        
+        <!-- <a href="{% url '' %}" class="btn btn-danger  ">Delete &nbsp; <i class="fa fa-minus" aria-hidden="true"></i> -->
+        </a>
+
+    </div>
+
+{% endblock %}

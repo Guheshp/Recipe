@@ -17,7 +17,7 @@
 }
 
 .row-img{
-    width: 350px;
+    width: 200px;
     display: block;
     /* margin: auto; */
 }
@@ -29,4 +29,130 @@
 }
 .row-description{
     width: 100%;
+}
+/* .left-align {
+    margin-left: 0;
+} */
+
+.right-align {
+    margin-left: 990px;
+}
+
+/*styling star rating*/
+.rating{
+	border: none;
+    display: inline-block;
+    margin: 0;
+
+}
+
+.rating > input{
+	display: none;
+}
+
+.rating > label:before{
+	content: '\f005';
+	font-family: FontAwesome;
+	margin: 3px;
+	font-size: 1.5rem;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.rating > .half:before{
+	content: '\f089';
+	position: absolute;
+	cursor: pointer;
+}
+
+
+.rating > label{
+	color: #ddd;
+	float: right;
+	cursor: pointer;
+}
+
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover, 
+.rating:not(:checked) > label:hover ~ label{
+	color: #ffb503;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,
+.rating > input:checked ~ label:hover ~ label{
+    color: #cc9000;
+}
+.rating-star i{
+    color: #ffb503 !important;
+    
+}
+.rating-star {
+    margin-bottom:20px ;
+}
+.img-unknown img{
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 50%;
+}
+.img-unknown p{
+    margin-left: 20px;
+}
+.review-form{
+    display: flex;
+    column-gap: 15px;
+    align-items: center;
+    
+}
+.container2{
+    border: 1px solid black;
+}
+
+.review-form .review-box2 p{
+    margin-top: 0; 
+    margin-right: 0;
+
+}
+
+.review-box1{
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.user-name {
+    font-size: 18px; 
+    font-weight: bold;
+    color: #333;
+}
+
+.review-date {
+    font-size: 14px;
+    color: #666; 
+}
+
+.review-content {
+    font-size: 16px;
+    padding: 10px 0px;
+   
+}
+
+.checkout-btn {
+ 
+   margin-bottom: 10px;
+   
+   
+}
+
+.down1{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    
+}
+.receip-heading{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }

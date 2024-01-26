@@ -1,0 +1,180 @@
+{% extends 'webapp/base.html'%}
+{% load static %}
+{% block content %}
+
+
+<body>
+
+        <div class="container " >
+            <div class="d-flex justify-content-end checkout-btn">
+
+            <a class="btn btn-info"  href="{% url 'my-all_receipe'%}">Checkout &nbsp;<i class="fa-solid fa-plus"></i></a>
+        </div>
+        </div>
+ <!-------------- receip view ------------------->
+        <div class="card container" >
+               
+                <strong style="margin-top: 10px;" >
+                    <h1>{{receip.receipe_name}}</h1><p>id={{receip.id}}</p>
+                </strong>
+                
+                <hr>
+            
+                <div class="card-body">
+            
+                    
+                    <div class="side" >
+                    
+                        <p> <img class="row-img" src="{{receip.imageURL}}" alt=""> </p> 
+                    
+                        <div  class="row-description">
+                            <h6> <strong>Description:</strong>{{ receip.receipe_description}}</h6>
+                        <div style="flex: 1; display:flex; "><p> <i class="fa fa-inr" aria-hidden="true"></i>{{ receip.receipe_price|floatformat:2 }}</p></div>
+                    
+                        <a class="btn btn-info " href="{% url 'my-update_receipe' receip.id%}"> Update &nbsp;<i class="fa-solid fa-plus"></i></a>
+                        <a class="btn btn-info " href="{% url 'my-all_receipe'%}"> Go Back &nbsp;<i class="fa fa-arrow-left"></i></a>
+                    
+                    </div>
+            
+                </div>
+          
+        </div>
+
+        <br>
+<!---------------- review box ------------------>
+
+<div class="card container">
+    <form action="{% url 'my-review' receip.id %}" method="POST" autocomplete="off" style="margin-top: 10px;">
+        {% csrf_token %}
+        
+        <h5>Write Your Review</h5>
+        
+        <!-- Rating stars -->
+        <div class="down1">
+            <label style="margin-bottom: 0; ">How do you rate this Food?</label>
+            <div class="rating " id="stars">
+                <input type="radio" id="star5" name="rating" value="5" required/><label for="star5" class="full" title="5"></label>
+                <input type="radio" id="star4.5" name="rating" value="4.5" required/><label for="star4.5" class="half" title="4.5"></label>
+                <input type="radio" id="star4" name="rating" value="4" required/><label for="star4" class="full" title="4"></label>
+                <input type="radio" id="star3.5" name="rating" value="3.5" required/><label for="star3.5" class="half" title="3.5"></label>
+                <input type="radio" id="star3" name="rating" value="3" required/><label for="star3" class="full" title="3"></label>
+                <input type="radio" id="star2.5" name="rating" value="2.5" required/><label for="star2.5" class="half" title="2.5"></label>
+                <input type="radio" id="star2" name="rating" value="2" required/><label for="star2" class="full" title="2"></label>
+                <input type="radio" id="star1.5" name="rating" value="1.5" required/><label for="star1.5" class="half" title="1.5"></label>
+                <input type="radio" id="star1" name="rating" value="1" required/><label for="star1" class="full" title="1"></label>
+                <input type="radio" id="star0.5" name="rating" value="0.5" required/><label for="star0.5" class="half" title="0.5"></label>
+            </div>
+        </div>
+
+        <!-- Review section -->
+        <p style="margin: 0;">Review:</p>
+        <textarea name="review" rows="3" class="form-control"></textarea>
+        <br>
+
+        <!-- Submit button -->
+        <input class="btn btn-info" type="submit" value="Submit Review">
+        <br><br>
+    </form>
+</div>
+
+        <br>
+
+<!-------------- Customers reviews ------------------>
+
+        <div class="container">
+            <h3>Customers Reviews</h3>
+            <span>Average Review: {{receip.AveragReview}}</span>
+            <div class="rating-star">
+                <span>
+                    <i class="fa fa-star{% if receip.AveragReview < 0.5 %}-o{% elif receip.AveragReview >= 0.5 and receip.AveragReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if receip.AveragReview < 1.5 %}-o{% elif receip.AveragReview >= 1.5 and receip.AveragReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if receip.AveragReview < 2.5 %}-o{% elif receip.AveragReview >= 2.5 and receip.AveragReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if receip.AveragReview < 3.5 %}-o{% elif receip.AveragReview >= 3.5 and receip.AveragReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if receip.AveragReview < 4.5 %}-o{% elif receip.AveragReview >= 4.5 and receip.AveragReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
+       
+        <div class=" card container" >
+           
+                {% for r in review%}
+
+                <div class="review-form" >
+                
+                        <div class="review-box1">
+                            <div class="img-unknown">
+                                <img src="{% static 'images/unknown.png' %}" alt="img">
+                            </div>
+                        </div>
+                
+                    <div class="review-box2">
+                    
+                            <!-- Displaying the user's name -->
+                            <b class="user-name">{{ r.user }}</b>
+
+                            <!-- Displaying the review date -->
+                            <p class="review-date">{{ r.created_at }}</p>
+
+                            <!-- Displaying the review and star content -->
+
+                            <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if r.rating == 0.5 %}-half-o{% elif r.rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if r.rating == 1.5 %}-half-o{% elif r.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if r.rating == 2.5 %}-half-o{% elif r.rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if r.rating == 3.5 %}-half-o{% elif r.rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if r.rating == 4.5 %}-half-o{% elif r.rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
+                                </span>&nbsp;&nbsp; <span>{{ r.review }}</span>
+                            </div>
+                            
+                        
+                    </div>
+                    
+                </div><hr>
+
+                {% endfor %}
+
+        </div>
+        
+</body>
+{% endblock %}
+
+ <!-- <a href="{% url 'my-dashboard'%}" class="btn btn-primary "> Return  &nbsp; <i class="fa fa-arrow-left" aria-hidden="true"></i></a> -->
+
+ &nbsp;
+
+ <!-- <a href="{% url ''  %}" class="btn btn-info">Update &nbsp; <i class="fa fa-plus" aria-hidden="true"></i></a> -->
+
+ &nbsp;
+
+ 
+ <!-- <a href="{% url '' %}" class="btn btn-danger  ">Delete &nbsp; <i class="fa fa-minus" aria-hidden="true"></i> -->
+ </a>
+
+ <div class="review-box2">
+                    
+    <!-- Displaying the user's name -->
+    <!-- <b class="user-name">{{ r.user }}</b> -->
+
+    <!-- Displaying the review date -->
+    <!-- <p class="review-date">{{ r.created_at }}</p> -->
+
+    <!-- Displaying the review and star content -->
+    <!-- <p class="review-content">  {% for star in "*****" %} -->
+
+        <!-- Checking if the current star iteration is less than or equal to the rating -->
+        <!-- {% if forloop.counter <= r.rating %} -->
+
+            <!-- If true, display a gold star -->
+            <!-- <i class="fas fa-star" style="color: #ffb503"></i>
+         -->
+        <!-- {% else %} -->
+
+            <!-- If false, display a light grey star -->
+            <!-- <i class="fas fa-star" style="color: lightgrey;"></i> -->
+        
+        <!-- {% endif %} -->
+
+    <!-- {% endfor %} {{ r.review }}</p>  review is here -->
+
+<!-- </div> -->

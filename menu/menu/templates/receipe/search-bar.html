@@ -1,0 +1,47 @@
+{% extends 'webapp/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+
+    <div class="container mt-0">
+        <a href="{% url 'my-all_receipe'%}" class="btn btn-info "> All Receip  &nbsp; <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+        <h3 style="margin-top: 40px;">You Searched For: "{{ query }}"</h3>
+        {% if search %}
+        
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Receipe name</th>
+                        <th scope="col">Receipe Description</th>
+                        <th scope="col">Receipe Price</th>
+                        <!-- <th scope="col">Average Rating</th> -->
+                        <th scope="col">Recipe Image</th>
+                        <th scope="col">View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for receip in search %}
+                        <tr>
+                            <td>{{ receip.receipe_name }}</td>
+                            <td>{{ receip.receipe_description }}</td>
+                            <td>{{ receip.receipe_price }}</td>
+                            <!-- <td> {% for r in receipes %}
+                                {{ r.AveragReview }}
+                            {% endfor %}</td> -->
+                            <td>
+                                <img src="/images/{{ receip.receipe_image }}" alt="img" style="width: 100px;">
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="{% url 'my-receipe_view' receip.id %}">&nbsp;<i class="fa fa-eye"
+                                        aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No receipe Found</p>
+        {% endif %}
+    </div>
+{% endblock %}

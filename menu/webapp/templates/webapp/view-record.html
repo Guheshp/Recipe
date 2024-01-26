@@ -1,0 +1,59 @@
+{% extends 'webapp/base.html'%}
+
+{% block content %}
+
+
+
+<div class="card container ">
+
+        <strong style="margin-top: 10px;"> &nbsp;&nbsp; &nbsp; <i class="fa fa-user-circle-o" aria-hidden="true"></i> 
+            &nbsp;
+            {{ record_all.first_name|upper}}
+
+            {{ record_all.last_name|upper}}
+
+        </strong>
+        
+        <hr>
+    
+    <div class="card-body">
+
+            <p> <strong>id:</strong>    {{ record_all.id}}</p> 
+
+            <p> <strong>Email:</strong>    {{ record_all.email}}</p> 
+
+            <p> <strong>Phone:</strong>    {{ record_all.phone}}</p> 
+
+            <p> <strong>Adress:</strong>    {{ record_all.address}}</p> 
+
+            <p> <strong>City:</strong>    {{ record_all.city}}</p> 
+
+            <p> <strong>State:</strong>    {{ record_all.state}}</p> 
+
+            <p> <strong>Country:</strong>    {{ record_all.country}}</p> 
+        
+            <p> <strong>Createion Date:</strong>    {{ record_all.creation_date}}</p>
+            
+    </div>
+
+</div>
+
+        <br>
+
+    <div class="container">
+
+        <a href="{% url 'my-dashboard'%}" class="btn btn-primary "> Return  &nbsp; <i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+
+        &nbsp;
+
+        <a href="{% url 'my-updaterecord' record_all.id %}" class="btn btn-info">Update &nbsp; <i class="fa fa-plus" aria-hidden="true"></i></a>
+      
+        &nbsp;
+
+        
+        <a href="{% url 'my-deleteRecord' record_all.id%}" class="btn btn-danger  ">Delete &nbsp; <i class="fa fa-minus" aria-hidden="true"></i>
+        </a>
+
+    </div>
+
+{% endblock %}

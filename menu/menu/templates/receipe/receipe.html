@@ -1,0 +1,82 @@
+{% extends 'webapp/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<body>
+
+    <div class="container mt-0 ">
+        
+        <h3>Receip</h3>
+        <div style="display: flex; align-items: center; justify-content:space-between;">
+            <h6>Start Adding Receip </h6> 
+            <a href="{% url 'my-all_receipe'%}" class="btn btn-info "> All Receip  &nbsp; <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+        <hr>
+
+        <br> 
+        
+        <form method="post" class="col-6 mx-auto card shadow-lg"  enctype="multipart/form-data"><br>
+            
+            {% csrf_token %}
+            
+            <div class="form-group">
+              <label for="exampleInputEmail1">Receipe name</label>
+              <input type="text" name="receipe_name" class="form-control"   placeholder="Receipe name" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleInputPassword1">Receipe Description</label>
+              <textarea name="receipe_description" id="" class="form-control"  placeholder="Description" required></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleInputPassword1">Receipe Price</label>
+              <input type="number" name="receipe_price" class="form-control"   placeholder="Price" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleFormControlFile1" class="form-lable">Receip Image</label>
+                <input type="file" name="receip_image" class="form-control-file" required>
+            </div>
+         
+            <button type="submit" class="btn btn-success">Add receip</button><br>
+          
+        </form>
+
+        <br>
+    
+    </div>
+
+</body>    
+{% endblock %}
+
+<!-- <a class="btn btn-info p-2"  href="{% url 'my-dashboard'%}" > go back &nbsp;<i class="fa fa-arrow-left" aria-hidden="true"></i></a> -->
+
+
+
+<!-- <table class="table  table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Receipe namae</th>
+        <th scope="col">Receipe Description</th>
+        <th scope="col">Recipe Image</th>
+      </tr>
+    </thead>
+
+    <tbody>
+       
+      <tr>
+        {% for receip in Receipe%}
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{receip.receipe_name}}</td>
+        <td>{{receip.receipe_description}}</td>
+        <td>
+            <img src="/images/{{receip.receipe_image}}" alt="img" style="height: 150px;"></td>
+      </tr>
+      {% endfor %}
+      
+      
+    </tbody>
+  </table> -->

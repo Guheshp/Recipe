@@ -8,53 +8,86 @@
     <div class="container mt-0 ">
 
         <div class="receip-heading">
-
           <h3>Receip </h3>
-          <h6>Start Adding Receip </h6>
-
+          <h6>Search for your fav receipe! </h6>
         </div>
-       
+
+        <div class="search-bar">
+            <form action="{% url 'my-search-receip' %}" method="get" class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-1" type="text" name="query" placeholder="Search Receip" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>       
+        </div>
     
 
-        <table class="table  table-bordered">
+      <table class="table  table-bordered">
+
             <thead>
               <tr>
-                <th scope="col">S.no</th>
-                <th scope="col">Receipe namae</th>
+                <th scope="col">Receipe name</th>
                 <th scope="col">Receipe Description</th>
                 <th scope="col">Receipe Price</th>
-                <th scope="col">Average Rating</th>
+                <!-- <th scope="col">Average Rating</th> -->
                 <th scope="col">Recipe Image</th>
                 <th scope="col">View</th>
               </tr>
-            </thead>
+          </thead>
 
-            <tbody>
-               
+          <tbody>
               <tr>
                 {% for receip in Receipe%}
-              
-                <th scope="row">{{forloop.counter}}</th>
                 <td>{{receip.receipe_name}}</td>
                 <td>{{receip.receipe_description}}</td>
                 <td>{{receip.receipe_price}}</td>
-              
-                <td> {% for r in Receipe %}
-                  {{ r.id }}
-                {% endfor %}</td>
-                
-                  
-              
+                <!-- <td> {% for r in Receipe %}
+                  {{ r.AveragReview }}
+                {% endfor %}</td> -->
                 <td>
                     <img src="/images/{{receip.receipe_image}}" alt="img" style="width: 100px; ">
                 </td>
                 <td style="text-align: center;"><a href="{% url 'my-receipe_view' receip.id %}"> &nbsp;<i class="fa fa-eye" aria-hidden="true"></i></a></td>
               </tr>
-             
                 {% endfor %}
-            </tbody>
-          </table>
-          <a class="btn btn-info p-2"  href="{% url 'my-r_receip' %}" > go back &nbsp;<i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+          </tbody>
+
+      </table>
+
+<!-- paginator -->
+      
+      <div class="paginator">
+
+
+          <ul class="pagination">
+           
+            {% if queryset.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page=1" >First</a>
+            </li>
+
+            <li class="page-item">
+              <a  class="page-link" href="?page={{ queryset.previous_page_number }}">previous</a>
+            </li>
+            {% endif %}
+
+            <li class="page-item">
+              <a class="page-link"> Page {{ queryset.number }} of {{ queryset.paginator.num_pages }}</a>
+            </li>
+           
+            {% if queryset.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ queryset.next_page_number }}">next</a>
+            </li>
+
+            <li class="page-item">
+              <a class="page-link"  href="?page={{ queryset.paginator.num_pages }}">last</a>
+            </li>
+            {% endif %}
+
+          </ul>
+      </div>
+      <a class="btn btn-info p-2"  href="{% url 'my-r_receip' %}" > go back &nbsp;<i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+        <br><br>
+        <!-- <a class="btn btn-info p-2"  href="{% url 'my-r_receip' %}" > go back &nbsp;<i class="fa fa-arrow-left" aria-hidden="true"></i></a> -->
 </body>    
 {% endblock %}
 

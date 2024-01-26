@@ -5,9 +5,12 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from django.contrib import messages
+
 from .models import Receipe, ReceipReview
 
-from django.db.models import Avg
+from django.core.paginator import Paginator
+
+
 
 from .form import (CreateReceipForm,
                     ReviweForm,
@@ -18,8 +21,14 @@ from .form import (CreateReceipForm,
 def All_Receipe(request):
 
     queryset = Receipe.objects.filter().order_by('-created_at')
+    
+    paginator = Paginator(queryset, 4)
 
-    context = {'Receipe':queryset}
+    page_number = request.GET.get('page',1)
+
+    queryset = paginator.get_page(page_number)
+
+    context = {'Receipe':queryset,'queryset':queryset}
 
     return render(request,'receipe/all_receipe.html',context)
 
@@ -114,38 +123,19 @@ def CreateReview(request, receip_id):
                 data.save()
                 messages.success(request, 'Thank you, Your review has been Created')
                 return redirect(url)
+            
+@login_required(login_url='my-login')
+def ReceipeSearch(request):
 
+    if request.method == 'GET':
 
-    
+        query = request.GET.get('query')
 
+        if query:
+            receipes = Receipe.objects.filter(receipe_name__icontains= query)#contains
+            return render(request, 'receipe/search-bar.html', {'search':receipes, 'query': query})
 
-    
+        else:  
+            print("Receipe not found")
+            return render(request, 'receipe/search-bar.html',{})
 
-# @login_required(login_url='my-login')
-# def CreateReview(request, pk):
-
-#     receipes = Receipe.objects.get(id=pk)
-
-#     form = ReviweForm()
-   
-
-#     if request.method == "POST":
-
-#         form = ReviweForm(request.POST)
-
-#         if form.is_valid():
-
-#             review = form.save(commit=False)
-#             review.receipe = receipes
-#             review.save()
-
-#             messages.success(request, "Your record was Created!")
-
-#             return redirect("my-all_receipe")
-#         else:
-               
-#                form = ReviweForm()
-    
-#     context = {'review': form,  'receipes': receipes}
-
-#     return redirect(request, 'receipe/create_review.html', context)

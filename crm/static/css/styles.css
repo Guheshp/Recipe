@@ -156,3 +156,18 @@
     justify-content: center;
     flex-direction: column;
 }
+
+/* search-bar---------- */
+
+.search-bar{
+    display:flex;
+    margin-bottom: 10px;
+    justify-content:end;
+
+}
+.paginator{
+    display: flex;
+    justify-content:space-around;
+    
+    
+}

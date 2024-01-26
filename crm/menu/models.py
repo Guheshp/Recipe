@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 from django.db.models import Avg
 from datetime import datetime
-import pytz
+
 
 # Create your models here.
 

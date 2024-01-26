@@ -34,6 +34,10 @@ from django.contrib.auth import get_user_model
 # home.
 
 def Home(request):
+    # my_records = Record.objects.all()
+
+    # context = {'records' : my_records}
+
     return render(request, 'webapp/index.html')
 
 # user register.
